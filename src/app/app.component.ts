@@ -1,17 +1,50 @@
-import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component } from "@angular/core";
+import { FormsModule } from "@angular/forms";
+import { RouterOutlet } from "@angular/router";
+import { ButtonModule } from "primeng/button";
+import { EditorModule } from "primeng/editor";
 
 @Component({
-  selector: 'app-root',
+  selector: "app-root",
   standalone: true,
-  imports: [RouterOutlet],
+  imports: [EditorModule, FormsModule, ButtonModule],
   template: `
-    <h1>Welcome to {{title}}!</h1>
-
-    <router-outlet />
+    <div class="editor-container">
+      <p-editor [(ngModel)]="title" [style]="{ height: '320px' }" />
+      <div class="editor-container-buttons">
+        <p-button (click)="onSubmit()"> Submit</p-button>
+        <p-button (click)="onUpdate()"> Patch </p-button>
+      </div>
+    </div>
   `,
-  styles: [],
+  styles: `
+    .editor-container {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center
+    }
+    .editor-container-buttons {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+    }
+
+    p-button {
+      padding: 10px;
+    }
+  
+  `,
 })
 export class AppComponent {
-  title = 'p-editor-patch-issue';
+  title = "";
+
+  onSubmit() {
+    console.log(this.title);
+  }
+
+  onUpdate() {
+    this.title = "Updated";
+  }
 }
